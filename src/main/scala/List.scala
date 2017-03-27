@@ -18,26 +18,26 @@ object ListFunction {
     case Nil => throw new NoSuchElementException
   }
 
-  def nth(n: Int, list: List[Int]): Int = (n,list) match {
-    case (0,h::_) => h
-    case (n,h::t) => nth(n-1,t)
-    case (n,Nil) => throw new NoSuchElementException
+  def nth(n: Int, list: List[Int]): Int = (n, list) match {
+    case (0, h :: _) => h
+    case (n, h :: t) => nth(n - 1, t)
+    case (n, Nil) => throw new NoSuchElementException
   }
 
   def length(list: List[Int]): Int = {
 
     def length(n: Int, list: List[Int]): Int = list match {
       case Nil => n
-      case h::t => length(n+1,t)
+      case h :: t => length(n + 1, t)
     }
-    length(0,list)
+    length(0, list)
   }
 
-  def reverse(list: List[Int]) = list.foldLeft(List[Int]())((acc,list) => list :: acc)
+  def reverse(list: List[Int]) = list.foldLeft(List[Int]())((acc, list) => list :: acc)
 
-  def sum(list: List[Int]) = list.foldLeft(0)((acc,value) => acc + value)
+  def sum(list: List[Int]) = list.foldLeft(0)((acc, value) => acc + value)
 
-  def isPalindrome(list: List[Int]) = list == list.foldLeft(List[Int]())((acc,list) => list :: acc)
+  def isPalindrome(list: List[Int]) = list == list.foldLeft(List[Int]())((acc, list) => list :: acc)
 
   def flatten(nested: List[Any]): List[Any] = nested.flatMap {
     case l: List[_] => flatten(l)
@@ -49,13 +49,25 @@ object ListFunction {
     @tailrec
     def compress(list: List[T], aux: List[T]): List[T] = list match {
       case Nil => aux
-      case h :: t => if(!aux.contains(h)) compress(t,aux:::List(h)) else compress(t,aux)
+      case h :: t => if (!aux.contains(h)) compress(t, aux ::: List(h)) else compress(t, aux)
     }
 
-    compress(list,Nil)
+    compress(list, Nil)
   }
 
-  
+  def pack[T](list: List[T]) = {
+    def pack(list: List[T], t: Option[T], acc: List[T], aux: List[List[T]]): List[List[T]] = list match {
+      case Nil => aux ::: List(acc)
+      case h :: tail => {
+        val value = t.getOrElse(null)
+        if (h == value || value == null) pack(tail, Some(h), h :: acc, aux)
+        else {
+          pack(tail, Some(h), List(h), aux ::: List(acc))
+        }
+      }
+    }
+    pack(list, None, Nil, Nil)
+  }
 
 }
 

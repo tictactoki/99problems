@@ -9,6 +9,7 @@ class ListSpec extends FlatSpec with Matchers {
   val palindromeList = List(1,2,3,2,1)
   val nestedList = List(List(1,4),5,List(6,7),8,List(10))
   val compressList = List(1,1,1,1,4,4,5,6,7,7,1,1,8,10)
+  val packList = List(List(1,1,1,1), List(4,4), List(5), List(6), List(7,7), List(1,1), List(8), List(10))
 
   "A last function" should "return the last element of the list" in {
     ListFunction.last(list) should equal(10)
@@ -46,6 +47,10 @@ class ListSpec extends FlatSpec with Matchers {
 
   "A compress function" should "delete duplicate value on list" in {
     ListFunction.compress(compressList) should equal(list)
+  }
+
+  "A pack function" should "create a list with duplicate value" in {
+    ListFunction.pack(compressList) should equal((packList))
   }
 
 }
