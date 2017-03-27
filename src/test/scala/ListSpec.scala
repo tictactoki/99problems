@@ -6,6 +6,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class ListSpec extends FlatSpec with Matchers {
 
   val list = List(1,4,5,6,7,8,10)
+  val drop = List(1,4,5,6,7,8)
   val palindromeList = List(1,2,3,2,1)
   val duplicateList = List(1,1,4,4,5,5,6,6,7,7,8,8,10,10)
   val nestedList = List(List(1,4),5,List(6,7),8,List(10))
@@ -74,6 +75,10 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.duplicate2(list) should equal(duplicateList)
     ListFunction.duplicateN(list,2) should equal(duplicateList)
     ListFunction.duplicateN(list,3) should not equal(duplicateList)
+  }
+
+  "A drop function" should "drop value in list at n indice" in {
+    ListFunction.drop(list, 6) should equal (drop)
   }
 
 }

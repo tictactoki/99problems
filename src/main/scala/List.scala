@@ -99,5 +99,16 @@ object ListFunction {
 
   def duplicateN[T](list: List[T], n: Int) = list.flatMap { e => List.fill(n)(e) }
 
+  def drop[T](list: List[T], n: Int) = {
+    def drop(list: List[T], n: Int, aux: List[T] = Nil): List[T] = (list,n)  match {
+      case (Nil, v) => aux
+      case (l,0) =>  aux ::: l.tail
+      case (h::tail,v) => drop(tail,n-1,aux ::: List(h))
+    }
+    drop(list, n)
+  }
+
+  
+
 }
 
