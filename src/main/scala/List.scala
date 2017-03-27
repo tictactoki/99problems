@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 /**
   * Created by wong on 26/03/17.
   */
@@ -42,6 +44,18 @@ object ListFunction {
     case any => List(any)
   }
 
+  def compress[T](list: List[T]) = {
+
+    @tailrec
+    def compress(list: List[T], aux: List[T]): List[T] = list match {
+      case Nil => aux
+      case h :: t => if(!aux.contains(h)) compress(t,aux:::List(h)) else compress(t,aux)
+    }
+
+    compress(list,Nil)
+  }
+
+  
 
 }
 
