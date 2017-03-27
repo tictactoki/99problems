@@ -85,6 +85,8 @@ object ListFunction {
     pack(list).map { list => if(list.size == 1) list.head else (list.size,list.head)}
   }
 
+  def decode[T](list: List[(Int,T)]): List[T] = list.flatMap { case (n,t) => List.fill(n)(t) }
+
 
 }
 

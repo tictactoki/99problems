@@ -64,4 +64,8 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.encoreModified(compressList)
   }
 
+  "A decode function" should "decode an encoded list" in {
+    ListFunction.decode(encodeList) should equal(compressList)
+  }
+
 }
