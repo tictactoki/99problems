@@ -51,23 +51,40 @@ object ListFunction {
       case Nil => aux
       case h :: t => if (!aux.contains(h)) compress(t, aux ::: List(h)) else compress(t, aux)
     }
-
     compress(list, Nil)
   }
 
-  def pack[T](list: List[T]) = {
-    def pack(list: List[T], t: Option[T], acc: List[T], aux: List[List[T]]): List[List[T]] = list match {
+  def pack[T >: Null](list: List[T]): List[List[T]] = {
+
+    @tailrec
+    def packed(list: List[T], t: T = null, acc: List[T] = Nil, aux: List[List[T]] = Nil): List[List[T]] = list match {
       case Nil => aux ::: List(acc)
       case h :: tail => {
-        val value = t.getOrElse(null)
-        if (h == value || value == null) pack(tail, Some(h), h :: acc, aux)
+        if (h == t || t == null) packed(tail, h, h :: acc, aux)
         else {
-          pack(tail, Some(h), List(h), aux ::: List(acc))
+          packed(tail, h, List(h), aux ::: List(acc))
         }
       }
     }
-    pack(list, None, Nil, Nil)
+    packed(list)
   }
+
+  def encode[T >: Null](list: List[T]) = {
+    def encode(list: List[T], prev: T = null, n: Int = 0, aux: List[(Int, T)] = Nil): List[(Int, T)] = list match {
+      case Nil => aux ::: List((n, prev) )
+      case h :: tail =>
+        if (h == prev || prev== null) encode(tail, h, n + 1, aux)
+        else encode(tail, h, 1, aux ::: List((n, prev) ))
+    }
+    encode(list)
+  }
+
+  def encode2[T >: Null](list: List[T]): List[(Int, T)] = pack(list).map { list => (list.size, list.head) }
+
+  def encoreModified[T >: Null](list: List[T]): List[Any] = {
+    pack(list).map { list => if(list.size == 1) list.head else (list.size,list.head)}
+  }
+
 
 }
 
