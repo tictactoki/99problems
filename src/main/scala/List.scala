@@ -87,6 +87,17 @@ object ListFunction {
 
   def decode[T](list: List[(Int,T)]): List[T] = list.flatMap { case (n,t) => List.fill(n)(t) }
 
+  def duplicate[T](list: List[T]) = {
+    def duplicate(list: List[T], aux: List[T]): List[T] = list match {
+      case Nil => aux
+      case h :: tail => duplicate(tail, aux ::: List(h,h))
+    }
+    duplicate(list,Nil)
+  }
+
+  def duplicate2[T](list: List[T]) = list.flatMap { e => List(e,e)}
+
+  def duplicateN[T](list: List[T], n: Int) = list.flatMap { e => List.fill(n)(e) }
 
 }
 

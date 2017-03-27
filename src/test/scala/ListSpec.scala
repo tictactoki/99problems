@@ -7,6 +7,7 @@ class ListSpec extends FlatSpec with Matchers {
 
   val list = List(1,4,5,6,7,8,10)
   val palindromeList = List(1,2,3,2,1)
+  val duplicateList = List(1,1,4,4,5,5,6,6,7,7,8,8,10,10)
   val nestedList = List(List(1,4),5,List(6,7),8,List(10))
   val compressList = List(1,1,1,1,4,4,5,6,7,7,1,1,8,10)
   val encodeList = List((4,1),(2,4),(1,5),(1,6),(2,7),(2,1),(1,8),(1,10))
@@ -66,6 +67,13 @@ class ListSpec extends FlatSpec with Matchers {
 
   "A decode function" should "decode an encoded list" in {
     ListFunction.decode(encodeList) should equal(compressList)
+  }
+
+  "A duplicate function" should "duplicate value in list" in {
+    ListFunction.duplicate(list) should equal(duplicateList)
+    ListFunction.duplicate2(list) should equal(duplicateList)
+    ListFunction.duplicateN(list,2) should equal(duplicateList)
+    ListFunction.duplicateN(list,3) should not equal(duplicateList)
   }
 
 }
