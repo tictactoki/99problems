@@ -31,6 +31,17 @@ object ListFunction {
     length(0,list)
   }
 
+  def reverse(list: List[Int]) = list.foldLeft(List[Int]())((acc,list) => list :: acc)
+
+  def sum(list: List[Int]) = list.foldLeft(0)((acc,value) => acc + value)
+
+  def isPalindrome(list: List[Int]) = list == list.foldLeft(List[Int]())((acc,list) => list :: acc)
+
+  def flatten(nested: List[Any]): List[Any] = nested.flatMap {
+    case l: List[_] => flatten(l)
+    case any => List(any)
+  }
+
 
 }
 
