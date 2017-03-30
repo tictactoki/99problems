@@ -108,7 +108,11 @@ object ListFunction {
     drop(list, n)
   }
 
-  
+  def split[T](list: List[T], n: Int) = (list.take(n), list.drop(n))
+
+  def slide[T](from: Int, to: Int, list: List[T]) = list.drop(from).take(to)
+
+
 
 }
 

@@ -81,4 +81,12 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.drop(list, 6) should equal (drop)
   }
 
+  "A split function" should "split the list" in {
+    ListFunction.split(list,1) should equal((List(1), List(4,5,6,7,8,10)))
+  }
+
+  "A slice function" should "slice the list" in {
+    ListFunction.slide(1,3,list) should equal(List(4,5,6))
+  }
+
 }
