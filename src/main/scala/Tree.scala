@@ -56,6 +56,10 @@ object Tree {
       val gt = cBalanced((n-1)/2+1, value)
       lt.flatMap(l => gt.flatMap(r => List(Node(value,l,r), Node(value,r,l))))
     }
-
   }
+
+  def symmetricBalancedTrees[T](n: Int, value: T): List[Tree[T]] = cBalanced(n,value).filter(_.isSymmetric)
+
+
+
 }
