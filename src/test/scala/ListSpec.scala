@@ -100,4 +100,9 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.isRightFormed("(()))(") should be (false)
   }
 
+  "Balance function" should "return true if the list of coins can return the value" in {
+    ListFunction.balance(50,List(80,20,10,5,2)) should be (true)
+    ListFunction.balance(50,List(20,3)) should be (false)
+  }
+
 }
