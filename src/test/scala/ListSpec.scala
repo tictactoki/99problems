@@ -89,4 +89,15 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.slide(1,3,list) should equal(List(4,5,6))
   }
 
+  "Dichotomy search" should "return the indice of the target or -1 if it doesn't exist" in {
+    val array = Array[Int](1,2,3,3,3,4,5,6,7,9,10,25,26)
+    ListFunction.dichotomySearch(array,1) should equal(0)
+  }
+
+  "Is right formed" should "return true if the string is well formed with parentheses" in {
+    val s = "()((()))"
+    ListFunction.isRightFormed(s) should be (true)
+    ListFunction.isRightFormed("(()))(") should be (false)
+  }
+
 }

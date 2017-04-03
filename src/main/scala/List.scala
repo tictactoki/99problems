@@ -112,7 +112,37 @@ object ListFunction {
 
   def slide[T](from: Int, to: Int, list: List[T]) = list.drop(from).take(to)
 
+  def dichotomySearch[T <% Ordered[T]](sortedArray: Array[T], target: T): Int = {
 
+    def search[T <% Ordered[T]](arr: Array[T], i: Int, j: Int, target: T): Int = {
+      val k = (i+j)/2
+      if(j < i) return -1;
+      if(arr(k) == target) return k;
+      else {
+        if(arr(k) > target) search(arr,i,k-1,target)
+        else search(arr,k+1,j,target)
+      }
+    }
+    search(sortedArray,0,sortedArray.length-1,target)
+  }
+
+
+  def isRightFormed(data: String) = {
+
+    def rightFormed(list: List[String], cpt: Int = 0): Boolean = {
+      if(cpt < 0) false
+      else {
+        list match {
+          case Nil => cpt == 0
+          case h::t =>
+            if(h == "(") rightFormed(t,cpt+1)
+            else if(h == ")") rightFormed(t,cpt-1)
+            else rightFormed(t,cpt)
+        }
+      }
+    }
+    rightFormed(data.split("").toList)
+  }
 
 }
 
