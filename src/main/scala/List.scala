@@ -152,5 +152,9 @@ object ListFunction {
       else balance(n-h,coins)
   }
 
+  val l = Stream.continually(util.Random.nextInt(6) + util.Random.nextInt(6) + 2).take(200).groupBy(identity).toList.sortBy(_._1).foreach { case (ind, x) =>
+    println(ind + ": " + "*"*x.size)
+  }
+
 }
 
