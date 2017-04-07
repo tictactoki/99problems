@@ -18,7 +18,6 @@ class TreeSpec extends FlatSpec with Matchers {
     node.addValue(4) should equal(res)
   }
 
-  println(Tree.symmetricBalancedTrees(5,"x"))
 
   "A symmetricBalancedTrees function" should "return a list of balanced and symmetric trees" in {
     Tree.symmetricBalancedTrees(5,"x").length should equal(4)
