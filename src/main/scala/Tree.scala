@@ -6,6 +6,8 @@ import scala.util.Random
 sealed abstract class Tree[+T] {
   def isSymmetric: Boolean
   def addValue[U >: T <% Ordered[U]](value: U): Tree[U]
+  def countLeaf: Int
+  def leafList: List[T]
 }
 
 case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
@@ -28,6 +30,16 @@ case class Node[+T](value: T, left: Tree[T], right: Tree[T]) extends Tree[T] {
     if(value < this.value) Node(this.value, left.addValue(value),right)
     else Node(this.value, left, right.addValue(value))
   }
+
+  override def countLeaf: Int = (left, right) match {
+    case (End,End) => 1
+    case (_,_) => left.countLeaf + right.countLeaf
+  }
+
+  override def leafList: List[T] = (left, right) match {
+    case (End,End) => List(value)
+    case (_,_) => left.leafList ::: right.leafList
+  }
 }
 
 case object End extends Tree[Nothing] {
@@ -36,6 +48,10 @@ case object End extends Tree[Nothing] {
   override def isSymmetric: Boolean = true
 
   override def addValue[U >: Nothing <% Ordered[U]](value: U): Tree[U] = Node(value)
+
+  override def countLeaf: Int = 0
+
+  override def leafList: List[Nothing] = Nil
 }
 
 object Node {

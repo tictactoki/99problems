@@ -89,4 +89,20 @@ class ListSpec extends FlatSpec with Matchers {
     ListFunction.slide(1,3,list) should equal(List(4,5,6))
   }
 
+  "Dichotomy search" should "return the indice of the target or -1 if it doesn't exist" in {
+    val array = Array[Int](1,2,3,3,3,4,5,6,7,9,10,25,26)
+    ListFunction.dichotomySearch(array,1) should equal(0)
+  }
+
+  "Is right formed" should "return true if the string is well formed with parentheses" in {
+    val s = "()((()))"
+    ListFunction.isRightFormed(s) should be (true)
+    ListFunction.isRightFormed("(()))(") should be (false)
+  }
+
+  "Balance function" should "return true if the list of coins can return the value" in {
+    ListFunction.balance(50,List(80,20,10,5,2)) should be (true)
+    ListFunction.balance(50,List(20,3)) should be (false)
+  }
+
 }

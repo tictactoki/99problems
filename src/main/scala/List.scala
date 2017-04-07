@@ -71,10 +71,10 @@ object ListFunction {
 
   def encode[T >: Null](list: List[T]) = {
     def encode(list: List[T], prev: T = null, n: Int = 0, aux: List[(Int, T)] = Nil): List[(Int, T)] = list match {
-      case Nil => aux ::: List((n, prev) )
+      case Nil => aux ::: List((n, prev))
       case h :: tail =>
-        if (h == prev || prev== null) encode(tail, h, n + 1, aux)
-        else encode(tail, h, 1, aux ::: List((n, prev) ))
+        if (h == prev || prev == null) encode(tail, h, n + 1, aux)
+        else encode(tail, h, 1, aux ::: List((n, prev)))
     }
     encode(list)
   }
@@ -82,28 +82,28 @@ object ListFunction {
   def encode2[T >: Null](list: List[T]): List[(Int, T)] = pack(list).map { list => (list.size, list.head) }
 
   def encoreModified[T >: Null](list: List[T]): List[Any] = {
-    pack(list).map { list => if(list.size == 1) list.head else (list.size,list.head)}
+    pack(list).map { list => if (list.size == 1) list.head else (list.size, list.head) }
   }
 
-  def decode[T](list: List[(Int,T)]): List[T] = list.flatMap { case (n,t) => List.fill(n)(t) }
+  def decode[T](list: List[(Int, T)]): List[T] = list.flatMap { case (n, t) => List.fill(n)(t) }
 
   def duplicate[T](list: List[T]) = {
     def duplicate(list: List[T], aux: List[T]): List[T] = list match {
       case Nil => aux
-      case h :: tail => duplicate(tail, aux ::: List(h,h))
+      case h :: tail => duplicate(tail, aux ::: List(h, h))
     }
-    duplicate(list,Nil)
+    duplicate(list, Nil)
   }
 
-  def duplicate2[T](list: List[T]) = list.flatMap { e => List(e,e)}
+  def duplicate2[T](list: List[T]) = list.flatMap { e => List(e, e) }
 
   def duplicateN[T](list: List[T], n: Int) = list.flatMap { e => List.fill(n)(e) }
 
   def drop[T](list: List[T], n: Int) = {
-    def drop(list: List[T], n: Int, aux: List[T] = Nil): List[T] = (list,n)  match {
+    def drop(list: List[T], n: Int, aux: List[T] = Nil): List[T] = (list, n) match {
       case (Nil, v) => aux
-      case (l,0) =>  aux ::: l.tail
-      case (h::tail,v) => drop(tail,n-1,aux ::: List(h))
+      case (l, 0) => aux ::: l.tail
+      case (h :: tail, v) => drop(tail, n - 1, aux ::: List(h))
     }
     drop(list, n)
   }
@@ -112,7 +112,49 @@ object ListFunction {
 
   def slide[T](from: Int, to: Int, list: List[T]) = list.drop(from).take(to)
 
+  def dichotomySearch[T <% Ordered[T]](sortedArray: Array[T], target: T): Int = {
 
+    def search[T <% Ordered[T]](arr: Array[T], i: Int, j: Int, target: T): Int = {
+      val k = (i + j) / 2
+      if (j < i) return -1;
+      if (arr(k) == target) return k;
+      else {
+        if (arr(k) > target) search(arr, i, k - 1, target)
+        else search(arr, k + 1, j, target)
+      }
+    }
+    search(sortedArray, 0, sortedArray.length - 1, target)
+  }
+
+
+  def isRightFormed(data: String) = {
+
+    def rightFormed(list: List[String], cpt: Int = 0): Boolean = {
+      if (cpt < 0) false
+      else {
+        list match {
+          case Nil => cpt == 0
+          case h :: t =>
+            if (h == "(") rightFormed(t, cpt + 1)
+            else if (h == ")") rightFormed(t, cpt - 1)
+            else rightFormed(t, cpt)
+        }
+      }
+    }
+    rightFormed(data.split("").toList)
+  }
+
+  def balance(count: Int, coins: List[Int]): Boolean = (count, coins) match {
+    case (0, _) => true
+    case (n, Nil) => n == 0
+    case (n,h::t) =>
+      if(n < h) balance(n,t)
+      else balance(n-h,coins)
+  }
+
+  val l = Stream.continually(util.Random.nextInt(6) + util.Random.nextInt(6) + 2).take(200).groupBy(identity).toList.sortBy(_._1).foreach { case (ind, x) =>
+    println(ind + ": " + "*"*x.size)
+  }
 
 }
 
